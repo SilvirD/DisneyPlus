@@ -1,0 +1,10 @@
+.EventList {
+  width: 100%;
+  background-color: rgb(230, 221, 97);
+  overflow-y: auto;
+
+  .row {
+    border-bottom: 1px solid gray;
+    padding: 8px;
+  }
+}
