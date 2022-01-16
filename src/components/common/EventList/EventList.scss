@@ -1,10 +1,72 @@
 .EventList {
-  width: 100%;
-  background-color: rgb(230, 221, 97);
+  width: 50%;
+  min-width: 480px;
+  background-color: whitesmoke;
   overflow-y: auto;
 
-  .row {
-    border-bottom: 1px solid gray;
-    padding: 8px;
+  &__header {
+    background-color: black;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    user-select: none;
+
+    &__date {
+      color: white;
+    }
+
+    &__close {
+      color: crimson;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  }
+
+  &__list {
+    .row {
+      border-bottom: 1px solid gray;
+      padding: 8px;
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+      align-content: center;
+      font-size: 18px;
+      padding: 5px 0 5px 0;
+      border-top: 1px solid #d1d2d4;
+      border-bottom: 1px solid #d1d2d4;
+
+      .appointmentTime {
+        width: 15%;
+        min-width: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        align-items: flex-end;
+        padding: 0 10px;
+        border-right: 3px solid rgb(184, 14, 14);
+
+        &__end {
+          opacity: 0.5;
+        }
+      }
+
+      .event {
+        display: flex;
+        flex-direction: column;
+        width: 85%;
+        padding: 0 10px;
+
+        &__place-time {
+          display: flex;
+          justify-content: space-between;
+          opacity: 0.5;
+        }
+      }
+    }
   }
 }

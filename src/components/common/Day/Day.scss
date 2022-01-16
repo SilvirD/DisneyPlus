@@ -42,4 +42,17 @@
     border-radius: 50%;
     background-color: gray;
   }
+
+  &.weekDay,
+  &.blankDate {
+    pointer-events: none;
+  }
+
+  &:hover &__date {
+    background-color: gray;
+
+    &__text {
+      color: white;
+    }
+  }
 }

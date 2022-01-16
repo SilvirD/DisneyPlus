@@ -1,12 +1,18 @@
 import React from "react";
 import "./Day.scss";
 
-function Day({ isToday, hasEvent, value }) {
+function Day({ isToday, hasEvent, value, onDateClick, isWeekDay }) {
   const today = isToday ? "today" : "";
+  const weekDay = isWeekDay ? "weekDay" : "";
+  const hasDate = !value ? "blankDate" : "";
+
   return (
-    <div className="Day-Container">
+    <div
+      className={`Day-Container ${weekDay} ${hasDate}`}
+      onClick={onDateClick}
+    >
       <div className={`Day-Container__date ${today}`}>
-        <p className={`Day-Container__date__text ${today}`}>{value}</p>
+        <p className={`Day-Container__date__text ${today} `}>{value}</p>
       </div>
       {hasEvent && <div className="Day-Container__eventDot" />}
     </div>
