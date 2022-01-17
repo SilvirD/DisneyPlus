@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Day from "../Day/Day";
-import EventList from "../../EventList/EventList";
+import EventList from "../EventList/EventList";
 
 function Month() {
   const [showEventList, setShowEventList] = useState(false);
