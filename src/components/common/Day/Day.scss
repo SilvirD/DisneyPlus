@@ -30,6 +30,9 @@
     .today {
       color: white;
     }
+    .weekend {
+      opacity: 0.68;
+    }
   }
 
   &__date.today {
@@ -39,8 +42,11 @@
   &__eventDot {
     width: 5px;
     height: 5px;
-    border-radius: 50%;
-    background-color: gray;
+
+    &.day-has-event {
+      border-radius: 50%;
+      background-color: gray;
+    }
   }
 
   &.weekDay,

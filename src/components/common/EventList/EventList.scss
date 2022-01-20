@@ -61,6 +61,22 @@
         width: 85%;
         padding: 0 10px;
 
+        &__content {
+          display: flex;
+          align-content: center;
+          justify-content: space-between;
+
+          .buttonGroup {
+            display: flex;
+            gap: 10px;
+
+            .editBtn,
+            .deleteBtn {
+              cursor: pointer;
+            }
+          }
+        }
+
         &__place-time {
           display: flex;
           justify-content: space-between;

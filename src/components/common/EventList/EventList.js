@@ -1,16 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./EventList.scss";
+import { mockData } from "./EventList.data";
+import moment from "moment";
+import Event from "./Event";
 
-function EventList({ isShow, onClose, selectedDate }) {
+function EventList({
+  isShow,
+  onClose,
+  selectedDate,
+  eventData,
+  onDeleteEvent,
+  onControlModal,
+}) {
+  const [eventDate, setEventDate] = useState(eventData);
+  const fakeData = [...eventDate];
+
   const date =
     selectedDate &&
     `${selectedDate.getDate()}/${
       selectedDate.getMonth() + 1
     }/${selectedDate.getFullYear()}`;
 
+  useEffect(() => {
+    setEventDate(eventData);
+  }, [eventData]);
+
+  const filterByDate = eventDate.filter(
+    (item) =>
+      date &&
+      moment(item.date, "YYYY-MM-DD").format("DD/MM/YYYY") ===
+        moment(date, "DD/M/YYYY").format("DD/MM/YYYY")
+  );
+
+  const handleDeleteEvent = (id) => {
+    onDeleteEvent(id);
+  };
+
   return (
     <>
-      {true && (
+      {isShow && (
         <div className="EventList">
           <div className="EventList__header">
             <div className="EventList__header__date">{date}</div>
@@ -19,25 +47,28 @@ function EventList({ isShow, onClose, selectedDate }) {
             </div>
           </div>
           <div className="EventList__list">
-            <div className="EventList__list__item">
-              <div className="appointmentTime">
-                <div className="appointmentTime__start">4:00 PM</div>
-                <div className="appointmentTime__end">4:20 PM</div>
-              </div>
+            {filterByDate.length > 0 ? (
+              filterByDate.map((item) => {
+                const { id, startTime, endTime, event, place, remainingTime } =
+                  item;
 
-              <div className="event">
-                <div className="event__content">Ghé lấy máy ảnh</div>
-                <div className="event__place-time">
-                  <div className="place">Nhà Xuân Minh</div>
-                  <div className="time">in 4 hr</div>
-                </div>
-              </div>
-            </div>
-            {/* <div className="row">Su kien 1</div>
-            <div className="row">Su kien 1</div>
-            <div className="row">Su kien 1</div>
-            <div className="row">Su kien 1</div>
-            <div className="row">Su kien 1</div> */}
+                return (
+                  <Event
+                    key={id}
+                    id={id}
+                    startTime={startTime}
+                    endTime={endTime}
+                    event={event}
+                    place={place}
+                    remainingTime={remainingTime}
+                    onDeleteEvent={handleDeleteEvent}
+                    onControlModal={onControlModal}
+                  />
+                );
+              })
+            ) : (
+              <div>No event on this day.</div>
+            )}
           </div>
         </div>
       )}

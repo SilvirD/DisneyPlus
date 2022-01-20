@@ -1,18 +1,19 @@
+import moment from "moment";
 import React, { useState } from "react";
 import styled from "styled-components";
 import Day from "../Day/Day";
 import EventList from "../EventList/EventList";
 
-function Month() {
+function Month({ monthYear, eventData, onDeleteEvent, onControlModal }) {
   const [showEventList, setShowEventList] = useState(false);
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const dt = new Date();
-  const toDay = dt.getDate();
-  const month = dt.getMonth(); //0 - 11 => 0
-  const year = dt.getFullYear(); //2022
+  const toDay = moment().format("DD/MM/YYYY");
+  const { month, year } = monthYear;
   const monthDays = new Date(year, month + 1, 0).getDate();
   const firstDay = new Date(year, month, 1).getDay();
+  const endDay = new Date(year, month + 1, 0).getDay();
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -33,22 +34,32 @@ function Month() {
         {daysOfWeek.map((day, index) => (
           <Day key={index} value={day} isWeekDay />
         ))}
-        {[...Array(firstDay).concat([...Array(monthDays).keys()])].map(
-          (item, index) => {
-            const dateInfo = new Date(year, month, item + 1);
-            return (
-              <Day
-                key={index}
-                value={item + 1 || ""}
-                isToday={item + 1 === toDay}
-                hasEvent={item + 1 ? true : false}
-                onDateClick={() => handleDateClick(dateInfo)}
-              />
-            );
-          }
-        )}
+        {[
+          ...Array(firstDay)
+            .concat([...Array(monthDays).keys()])
+            .concat([...Array(6 - endDay)]),
+        ].map((item, index) => {
+          const dateInfo = item + 1 ? new Date(year, month, item + 1) : "";
+          const test = moment(dateInfo).format("DD/MM/YYYY");
+          const indx = eventData.findIndex(
+            (item) =>
+              moment(item.date, "YYYY-MM-DD").format("DD/MM/YYYY") === test
+          );
+          return (
+            <Day
+              key={index}
+              value={dateInfo}
+              isToday={moment(dateInfo).format("DD/MM/YYYY") === toDay}
+              hasEvent={indx > -1}
+              onDateClick={() => handleDateClick(dateInfo)}
+            />
+          );
+        })}
       </Container>
       <EventList
+        onControlModal={onControlModal}
+        onDeleteEvent={onDeleteEvent}
+        eventData={eventData}
         isShow={showEventList}
         onClose={handleCloseList}
         selectedDate={selectedDate}
