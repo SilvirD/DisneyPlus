@@ -7,7 +7,7 @@ function Movies({ onSubmit, submitContent }) {
       <h4>Recommened for You</h4>
       <Content>
         {[...Array(4).keys()].map((item) => (
-          <Wrap>
+          <Wrap key={item}>
             <img
               src="https://s3.cloud.cmctelecom.vn/tinhte1/2018/12/4512215_46_26_1361525668_37_biet_doi_sieu_anh_hung.jpg"
               alt=""
